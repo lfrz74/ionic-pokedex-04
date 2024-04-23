@@ -46,10 +46,10 @@ export class PokemonService {
               const pokemonObj = new Pokemon();
               pokemonObj.id = pokemonData.order;
               pokemonObj.name = pokemonData.name;
-              pokemonObj.type1 = pokemonData.types[0].type_name;
+              pokemonObj.type1 = pokemonData.types[0].type.name;
 
               if (pokemonData.types[1]) {
-                pokemonObj.type2 = pokemonData.types[1].type_name;
+                pokemonObj.type2 = pokemonData.types[1].type.name;
               }
 
               pokemonObj.sprite = pokemonData.sprites.front_default;
@@ -58,7 +58,7 @@ export class PokemonService {
               pokemonObj.stats = pokemonData.stats;
 
               pokemonObj.abilities = pokemonData.abilities
-                .filter((ab: { is_hidden: any }) => ab.is_hidden)
+                .filter((ab: { is_hidden: any }) => !ab.is_hidden)
                 .map((ab: { ability: { name: any } }) => ab.ability.name);
 
               const hiddenAbility = pokemonData.abilities.find(
@@ -73,6 +73,7 @@ export class PokemonService {
             }
           });
         }
+        return pokemons;
       });
     }
     return null;
