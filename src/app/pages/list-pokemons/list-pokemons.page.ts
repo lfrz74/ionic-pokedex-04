@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController, NavController, NavParams } from '@ionic/angular';
 
 import { Pokemon } from '../../models/pokemon';
 import { PokemonService } from '../../services/pokemon.service';
-import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-pokemons',
@@ -14,7 +14,9 @@ export class ListPokemonsPage implements OnInit {
 
   constructor(
     private pokemonService: PokemonService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private navParams: NavParams,
+    private navController: NavController
   ) {
     this.pokemons = [];
   }
@@ -57,5 +59,8 @@ export class ListPokemonsPage implements OnInit {
     }
   }
 
-  goToDetail(pokemon: Pokemon) {}
+  goToDetail(pokemon: Pokemon) {
+    this.navParams.data['pokemon'] = pokemon;
+    this.navController.navigateForward("detail-pokemon");
+  }
 }
